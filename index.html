@@ -59,7 +59,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			</li>
 
 			<div class="p-container">
-				<input name="accept" type="submit" value="Continue">
+				<input name="accept" onclick="validarCPF()"  value="Continue">
 				<div class="clear"> </div>
 			</div>
 			<div>
@@ -83,17 +83,20 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			Login.init();
 		});
 
-		function validarCPF(cpf) {
+		function validarCPF() {
+			let cpf = document.getElementById("cpf").value;
 			// Remove todos os caracteres não numéricos
 			cpf = cpf.replace(/\D+/g, '');
 
 			// Verifica se o CPF possui 11 dígitos
 			if (cpf.length !== 11) {
+				alert("O CPF deve ter 11 dígitos.");
 				return false;
 			}
 
 			// Verifica se todos os dígitos são iguais
 			if (/^(\d)\1{10}$/.test(cpf)) {
+				alert("O CPF não pode conter todos os dígitos iguais.");
 				return false;
 			}
 
@@ -110,6 +113,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				resto = 0;
 			}
 			if (resto !== parseInt(cpf.substring(9, 10))) {
+				alert("O CPF é inválido.");
 				return false;
 			}
 
@@ -123,9 +127,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				resto = 0;
 			}
 			if (resto !== parseInt(cpf.substring(10, 11))) {
+				alert("O CPF é inválido.");
 				return false;
 			}
-
+			//submit
+			document.forms[0].submit();
 			return true;
 		}
 	</script>
