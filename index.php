@@ -481,14 +481,26 @@ if ($_POST['logout_id']) {
 			$cpf = $_POST['cpf'];
 			$email = $_POST['email'];
 			$db = new PDO('sqlite:./cadastro.db');
-			$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-			// Inserir os dados na tabela
-			$stmt = $db->prepare("INSERT INTO usuarios (name, cpf, email) VALUES (:name, :cpf, :email)");
-			$stmt->bindParam(':name', $name);
+
+			// Verificar se o CPF já existe
+			$stmt = $db->prepare("SELECT COUNT(*) FROM usuarios WHERE cpf = :cpf");
 			$stmt->bindParam(':cpf', $cpf);
-			$stmt->bindParam(':email', $email);
 			$stmt->execute();
+			$count = $stmt->fetchColumn();
+		  
+			if ($count == 0) {
+				$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+				// Inserir os dados na tabela
+				$stmt = $db->prepare("INSERT INTO usuarios (name, cpf, email) VALUES (:name, :cpf, :email)");
+				$stmt->bindParam(':name', $name);
+				$stmt->bindParam(':cpf', $cpf);
+				$stmt->bindParam(':email', $email);
+				$stmt->execute();
+			}
+
+			
 		
 		}
 
