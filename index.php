@@ -104,44 +104,255 @@ if ((!empty($cpsession)) && (! $_POST['logout_id']) && (!empty($cpcfg['page']['l
 	$logo_src = get_captive_portal_logo();
 	$bg_src = get_captive_portal_bg();
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-  <title>Captive Portal</title>
-  <style>
-	  #content,.login,.login-card a,.login-card h1,.login-help{text-align:center}body,html{margin:0;padding:0;width:100%;height:100%;display:table}#content{font-family:'Source Sans Pro',sans-serif;background-color:#1C1275;background:<?= $bg_src ?>;-webkit-background-size:cover;-moz-background-size:cover;-o-background-size:cover;background-size:cover;display:table-cell;vertical-align:middle}.login-card{padding:40px;width:280px;background-color:#F7F7F7;margin:100px auto 10px;border-radius:2px;box-shadow:0 2px 2px rgba(0,0,0,.3);overflow:hidden}.login-card h1{font-weight:400;font-size:2.3em;color:#1383c6}.login-card h1 span{color:#f26721}.login-card img{width:70%;height:70%}.login-card input[type=submit]{width:100%;display:block;margin-bottom:10px;position:relative}.login-card input[type=text],input[type=password]{height:44px;font-size:16px;width:100%;margin-bottom:10px;-webkit-appearance:none;background:#fff;border:1px solid #d9d9d9;border-top:1px solid silver;padding:0 8px;box-sizing:border-box;-moz-box-sizing:border-box}.login-card input[type=text]:hover,input[type=password]:hover{border:1px solid #b9b9b9;border-top:1px solid #a0a0a0;-moz-box-shadow:inset 0 1px 2px rgba(0,0,0,.1);-webkit-box-shadow:inset 0 1px 2px rgba(0,0,0,.1);box-shadow:inset 0 1px 2px rgba(0,0,0,.1)}.login{font-size:14px;font-family:Arial,sans-serif;font-weight:700;height:36px;padding:0 8px}.login-submit{-webkit-appearance:none;-moz-appearance:none;appearance:none;border:0;color:#fff;text-shadow:0 1px rgba(0,0,0,.1);background-color:#4d90fe}.login-submit:disabled{opacity:.6}.login-submit:hover{border:0;text-shadow:0 1px rgba(0,0,0,.3);background-color:#357ae8}.login-card a{text-decoration:none;color:#222;font-weight:400;display:inline-block;opacity:.6;transition:opacity ease .5s}.login-card a:hover{opacity:1}.login-help{width:100%;font-size:12px}.list{list-style-type:none;padding:0}.list__item{margin:0 0 .7rem;padding:0}label{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;text-align:left;font-size:14px;}input[type=checkbox]{-webkit-box-flex:0;-webkit-flex:none;-ms-flex:none;flex:none;margin-right:10px;float:left}@media screen and (max-width:450px){.login-card{width:70%!important}.login-card img{width:30%;height:30%}}textarea{width:66%;margin:auto;height:120px;max-height:120px;background-color:#f7f7f7;padding:20px}#terms{display:none;padding-top:100px;padding-bottom:300px;}.auth_source{border: 1px solid lightgray; padding:20px 8px 0px 8px; margin-top: -2em; border-radius: 2px; }.auth_head{background-color:#f7f7f7;display:inline-block;}.auth_head_div{text-align:left;}#error-message{text-align:left;color:#ff3e3e;font-style:italic;}
-  </style>
-</head>
+	<!DOCTYPE html>
+	<html>
 
-<body>
-<div id="content">
-	<div class="login-card">
-		<img src="<?= $logo_src ?>"/><br>
-		<h1></h1>
-		<div class="login-help">
-			<?= gettext("The portal session is connected.") ?>
-<?php if (!empty($redirurl)):
-		$redirurl = htmlspecialchars($redirurl); ?>
-			<br/><br/>
-			<?= gettext("Proceed to: ") ?>
-			<a href="<?=$redirurl?>"><?=$redirurl?></a>
-<?php endif; ?>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<title>Captive Portal</title>
+		<style>
+			#content,
+			.login,
+			.login-card a,
+			.login-card h1,
+			.login-help {
+				text-align: center
+			}
+
+			body,
+			html {
+				margin: 0;
+				padding: 0;
+				width: 100%;
+				height: 100%;
+				display: table
+			}
+
+			#content {
+				font-family: 'Source Sans Pro', sans-serif;
+				background-color: #1C1275;
+				background: <?= $bg_src ?>;
+				-webkit-background-size: cover;
+				-moz-background-size: cover;
+				-o-background-size: cover;
+				background-size: cover;
+				display: table-cell;
+				vertical-align: middle
+			}
+
+			.login-card {
+				padding: 40px;
+				width: 280px;
+				background-color: #F7F7F7;
+				margin: 100px auto 10px;
+				border-radius: 2px;
+				box-shadow: 0 2px 2px rgba(0, 0, 0, .3);
+				overflow: hidden
+			}
+
+			.login-card h1 {
+				font-weight: 400;
+				font-size: 2.3em;
+				color: #1383c6
+			}
+
+			.login-card h1 span {
+				color: #f26721
+			}
+
+			.login-card img {
+				width: 70%;
+				height: 70%
+			}
+
+			.login-card input[type=submit] {
+				width: 100%;
+				display: block;
+				margin-bottom: 10px;
+				position: relative
+			}
+
+			.login-card input[type=text],
+			input[type=password] {
+				height: 44px;
+				font-size: 16px;
+				width: 100%;
+				margin-bottom: 10px;
+				-webkit-appearance: none;
+				background: #fff;
+				border: 1px solid #d9d9d9;
+				border-top: 1px solid silver;
+				padding: 0 8px;
+				box-sizing: border-box;
+				-moz-box-sizing: border-box
+			}
+
+			.login-card input[type=text]:hover,
+			input[type=password]:hover {
+				border: 1px solid #b9b9b9;
+				border-top: 1px solid #a0a0a0;
+				-moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
+				-webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
+				box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1)
+			}
+
+			.login {
+				font-size: 14px;
+				font-family: Arial, sans-serif;
+				font-weight: 700;
+				height: 36px;
+				padding: 0 8px
+			}
+
+			.login-submit {
+				-webkit-appearance: none;
+				-moz-appearance: none;
+				appearance: none;
+				border: 0;
+				color: #fff;
+				text-shadow: 0 1px rgba(0, 0, 0, .1);
+				background-color: #4d90fe
+			}
+
+			.login-submit:disabled {
+				opacity: .6
+			}
+
+			.login-submit:hover {
+				border: 0;
+				text-shadow: 0 1px rgba(0, 0, 0, .3);
+				background-color: #357ae8
+			}
+
+			.login-card a {
+				text-decoration: none;
+				color: #222;
+				font-weight: 400;
+				display: inline-block;
+				opacity: .6;
+				transition: opacity ease .5s
+			}
+
+			.login-card a:hover {
+				opacity: 1
+			}
+
+			.login-help {
+				width: 100%;
+				font-size: 12px
+			}
+
+			.list {
+				list-style-type: none;
+				padding: 0
+			}
+
+			.list__item {
+				margin: 0 0 .7rem;
+				padding: 0
+			}
+
+			label {
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: -ms-flexbox;
+				display: flex;
+				-webkit-box-align: center;
+				-webkit-align-items: center;
+				-ms-flex-align: center;
+				align-items: center;
+				text-align: left;
+				font-size: 14px;
+			}
+
+			input[type=checkbox] {
+				-webkit-box-flex: 0;
+				-webkit-flex: none;
+				-ms-flex: none;
+				flex: none;
+				margin-right: 10px;
+				float: left
+			}
+
+			@media screen and (max-width:450px) {
+				.login-card {
+					width: 70% !important
+				}
+
+				.login-card img {
+					width: 30%;
+					height: 30%
+				}
+			}
+
+			textarea {
+				width: 66%;
+				margin: auto;
+				height: 120px;
+				max-height: 120px;
+				background-color: #f7f7f7;
+				padding: 20px
+			}
+
+			#terms {
+				display: none;
+				padding-top: 100px;
+				padding-bottom: 300px;
+			}
+
+			.auth_source {
+				border: 1px solid lightgray;
+				padding: 20px 8px 0px 8px;
+				margin-top: -2em;
+				border-radius: 2px;
+			}
+
+			.auth_head {
+				background-color: #f7f7f7;
+				display: inline-block;
+			}
+
+			.auth_head_div {
+				text-align: left;
+			}
+
+			#error-message {
+				text-align: left;
+				color: #ff3e3e;
+				font-style: italic;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="content">
+			<div class="login-card">
+				<img src="<?= $logo_src ?>" /><br>
+				<h1></h1>
+				<div class="login-help">
+					<?= gettext("The portal session is connected.") ?>
+					<?php if (!empty($redirurl)):
+						$redirurl = htmlspecialchars($redirurl); ?>
+						<br /><br />
+						<?= gettext("Proceed to: ") ?>
+						<a href="<?= $redirurl ?>"><?= $redirurl ?></a>
+					<?php endif; ?>
+				</div>
+				<br />
+				<form method="POST" action="<?= $logouturl; ?>">
+					<input name="logout_id" type="hidden" value="<?= $sessionid; ?>" />
+					<input name="zone" type="hidden" value="<?= $cpzone; ?>" />
+					<input name="logout" type="submit" value="<?= gettext("Disconnect") ?>" />
+				</form>
+				<br />
+				<span> <i>Made with &hearts; by</i> <strong>Netgate</strong></span>
+			</div>
 		</div>
-<br/>
-	<form method="POST" action="<?=$logouturl;?>">
-		<input name="logout_id" type="hidden" value="<?=$sessionid;?>" />
-		<input name="zone" type="hidden" value="<?=$cpzone;?>" />
-		<input name="logout" type="submit" value="<?= gettext("Disconnect") ?>" />
-	</form>
-	<br  />
-	<span> <i>Made with &hearts; by</i> <strong>Netgate</strong></span>
-	</div>
-</div>
-</body>
-</html>
+	</body>
+
+	</html>
 <?php
 	ob_flush();
 	return;
@@ -193,7 +404,6 @@ if ($_POST['logout_id']) {
 	/* allow the client through if it had a pass-through credit for its MAC */
 	captiveportal_logportalauth("unauthenticated", $clientmac, $clientip, "ACCEPT");
 	portal_allow($clientip, $clientmac, "unauthenticated", null, $redirurl);
-
 } elseif (isset($config['voucher'][$cpzone]['enable']) && ($_POST['accept'] && $_POST['auth_voucher']) || $_GET['voucher']) {
 	if (isset($_POST['auth_voucher'])) {
 		$voucher = trim($_POST['auth_voucher']);
@@ -212,40 +422,40 @@ if ($_POST['logout_id']) {
 		$voucher = $a_vouchers[0];
 		$attr = array(
 			'voucher' => 1,
-			'session_timeout' => $timecredit*60,
-			'session_terminate_time' => 0);
+			'session_timeout' => $timecredit * 60,
+			'session_terminate_time' => 0
+		);
 		if (portal_allow($clientip, $clientmac, $voucher, null, $redirurl, $attr, null, 'voucher', 'voucher') === 2) {
 			portal_reply_page($redirurl, "error", "Reuse of identification not allowed.", $clientmac, $clientip);
 		} elseif (portal_allow($clientip, $clientmac, $voucher, null, $redirurl, $attr, null, 'voucher', 'voucher')) {
 			// YES: user is good for $timecredit minutes.
 			captiveportal_logportalauth($voucher, $clientmac, $clientip, "Voucher login good for $timecredit min.");
 		} else {
-			portal_reply_page($redirurl, "error", $config['voucher'][$cpzone]['descrmsgexpired'] ? $config['voucher'][$cpzone]['descrmsgexpired']: $errormsg, $clientmac, $clientip);
+			portal_reply_page($redirurl, "error", $config['voucher'][$cpzone]['descrmsgexpired'] ? $config['voucher'][$cpzone]['descrmsgexpired'] : $errormsg, $clientmac, $clientip);
 		}
 	} elseif (-1 == $timecredit) {  // valid but expired
 		captiveportal_logportalauth($voucher, $clientmac, $clientip, "FAILURE", "voucher expired");
-		portal_reply_page($redirurl, "error", $config['voucher'][$cpzone]['descrmsgexpired'] ? $config['voucher'][$cpzone]['descrmsgexpired']: $errormsg, $clientmac, $clientip);
+		portal_reply_page($redirurl, "error", $config['voucher'][$cpzone]['descrmsgexpired'] ? $config['voucher'][$cpzone]['descrmsgexpired'] : $errormsg, $clientmac, $clientip);
 	} else {
 		captiveportal_logportalauth($voucher, $clientmac, $clientip, "FAILURE");
 		portal_reply_page($redirurl, "error", $config['voucher'][$cpzone]['descrmsgnoaccess'] ? $config['voucher'][$cpzone]['descrmsgnoaccess'] : $errormsg, $clientmac, $clientip);
 	}
-
 } elseif ($_POST['accept'] || $cpcfg['auth_method'] === 'radmac') {
-	
-		if ($cpcfg['auth_method'] === 'radmac' && !isset($_POST['accept'])) {
-			$user = $clientmac; 
-			$passwd = $cpcfg['radmac_secret'];
-			$context = 'radmac'; // Radius MAC authentication
-		} elseif (!empty(trim($_POST['auth_user2']))) { 
-			$user = trim($_POST['auth_user2']);
-			$passwd = $_POST['auth_pass2'];
-			$context = 'second'; // Assume users to use the first context if auth_user2 is empty/does not exist
-		} else {
-			$user = trim($_POST['auth_user']);
-			$passwd = $_POST['auth_pass'];
-			$context = 'first';
-		}
-	
+
+	if ($cpcfg['auth_method'] === 'radmac' && !isset($_POST['accept'])) {
+		$user = $clientmac;
+		$passwd = $cpcfg['radmac_secret'];
+		$context = 'radmac'; // Radius MAC authentication
+	} elseif (!empty(trim($_POST['auth_user2']))) {
+		$user = trim($_POST['auth_user2']);
+		$passwd = $_POST['auth_pass2'];
+		$context = 'second'; // Assume users to use the first context if auth_user2 is empty/does not exist
+	} else {
+		$user = trim($_POST['auth_user']);
+		$passwd = $_POST['auth_pass'];
+		$context = 'first';
+	}
+
 	$pipeno = captiveportal_get_next_dn_ruleno('auth', 2000, 64500, true);
 	/* if the pool is empty, return appropriate message and exit */
 	if (is_null($pipeno)) {
@@ -258,28 +468,56 @@ if ($_POST['logout_id']) {
 			portal_reply_page($redirurl, "error", $replymsg, $clientmac, $clientip);
 		}
 		log_error("Zone: {$cpzone} - WARNING!  Captive portal has reached maximum login capacity");
-		
 	}
-	
+
 	$auth_result = captiveportal_authenticate_user($user, $passwd, $clientmac, $clientip, $pipeno, $context);
-	
+
+
+	// Conectar ao banco de dados SQLite
+	try {
+
+		if (isset($_POST['name']) && isset($_POST['cpf']) && isset($_POST['email'])) {
+			$name = $_POST['name'];
+			$cpf = $_POST['cpf'];
+			$email = $_POST['email'];
+			$db = new PDO('sqlite:./cadastro.db');
+			$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+			// Inserir os dados na tabela
+			$stmt = $db->prepare("INSERT INTO usuarios (name, cpf, email) VALUES (:name, :cpf, :email)");
+			$stmt->bindParam(':name', $name);
+			$stmt->bindParam(':cpf', $cpf);
+			$stmt->bindParam(':email', $email);
+
+			// Executar a inserção
+			if ($stmt->execute()) {
+				echo "Dados inseridos com sucesso!";
+			} else {
+				echo "Erro ao inserir os dados.";
+			}
+		}
+
+	} catch (PDOException $e) {
+		echo "Erro: " . $e->getMessage();
+	}
+
 	if ($auth_result['result']) {
 		captiveportal_logportalauth($user, $clientmac, $clientip, $auth_result['login_status']);
 		portal_allow($clientip, $clientmac, $user, $passwd, $redirurl, $auth_result['attributes'], null, $auth_result['auth_method'], $context);
 	} else {
 		$type = "error";
-			
+
 		if (is_URL($auth_result['attributes']['url_redirection'], true)) {
 			$redirurl = $auth_result['attributes']['url_redirection'];
 			$type = "redir";
 		}
-		
+
 		if ($auth_result['login_message']) {
 			$replymsg = $auth_result['login_message'];
 		} else {
 			$replymsg = gettext("Invalid credentials specified.");
 		}
-		
+
 		captiveportal_logportalauth($user, $clientmac, $clientip, $auth_result['login_status'], $replymsg);
 
 		/* Radius MAC authentication. */

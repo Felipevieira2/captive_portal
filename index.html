@@ -1,0 +1,89 @@
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>.:: Transformando a WEB ::.</title>
+	<meta charset="utf-8">
+	<link href="css/style.css" rel='stylesheet' type='text/css' />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script type="application/x-javascript">
+		addEventListener("load", function () {
+			setTimeout(hideURLbar, 0);
+		}, false);
+
+		function hideURLbar() {
+			window.scrollTo(0, 1);
+		}
+	</script>
+	<script src="css/jquery-1.10.1.min.js" type="text/javascript"></script>
+	<script src="css/bootstrap.min.js" type="text/javascript"></script>
+	<script src="css/jquery.validate.min.js" type="text/javascript"></script>
+	<script src="css/jquery.backstretch.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="css/select2.min.js"></script>
+	<script src="css/app.js" type="text/javascript"></script>
+	<script src="css/login-soft.js" type="text/javascript"></script>
+	<!--webfonts-->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:600italic,400,300,600,700' rel='stylesheet'
+		type='text/css'>
+	<!--//webfonts-->
+</head>
+
+<body>
+
+	<!-----start-main---->
+	<div class="login-form">
+		<div class="head">
+			<img src="images/mem2.jpg" alt="" />
+
+		</div>
+		<form method="post" action="$PORTAL_ACTION$">
+			
+			<input name="redirurl" type="hidden" value="$PORTAL_REDIRURL$">
+
+			<li>				
+				<input type="text" id="name" name="name" placeholder="Nome" required>
+
+			</li>
+			
+			<li>				
+				<input type="text" id="cpf" name="cpf" placeholder="CPF" required>
+			</li>
+			<li>				
+				<input type="text" id="email" name="email" placeholder="E-mail" required>
+			</li>
+
+			<div class="p-container">
+				<input name="accept" type="submit" value="Continue" onClick="myFunction()">
+				<div class="clear"> </div>
+			</div>
+			<div>
+				<br>
+				<p align="justify">Preencha os dados acima para navegar.
+					<br>
+					<br>
+				</p>
+			</div>
+		</form>
+	</div>
+	<!--//End-login-form-->
+	<!-----start-copyright---->
+	<div class="copy-right">
+		<p>2014 &copy; <a href="http://7sec.com.br/">By 7 Sec</a></p>
+	</div>
+	<!-----//end-copyright---->
+	<script>
+		jQuery(document).ready(function () {
+			App.init();
+			Login.init();
+		});
+	</script>
+
+</body>
+
+</html>
