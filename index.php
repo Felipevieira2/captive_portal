@@ -488,13 +488,8 @@ if ($_POST['logout_id']) {
 			$stmt->bindParam(':name', $name);
 			$stmt->bindParam(':cpf', $cpf);
 			$stmt->bindParam(':email', $email);
-
-			// Executar a inserção
-			if ($stmt->execute()) {
-				echo "Dados inseridos com sucesso!";
-			} else {
-				echo "Erro ao inserir os dados.";
-			}
+			$stmt->execute();
+		
 		}
 
 	} catch (PDOException $e) {
