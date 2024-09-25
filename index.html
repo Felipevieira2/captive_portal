@@ -45,7 +45,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<form method="post" action="$PORTAL_ACTION$">
 
 			<input name="redirurl" type="hidden" value="$PORTAL_REDIRURL$">
-			<input name="zone" type="hidden" value="$PORTAL_ZONE$">
+
 
 			<li>
 				<!-- icon from user -->
@@ -61,7 +61,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			</li>
 
 			<div class="p-container">
-				<input name="accept" type="submit" value="Continue">
+				<input name="accept" type="submit" value="Continue" onClick="myFunction()">
 				<div class="clear"> </div>
 			</div>
 			<div>
@@ -85,73 +85,73 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			Login.init();
 		});
 
-		// function validarCPF(e) {
-		// 	event.preventDefault();
-		// 	let cpf = document.getElementById("cpf").value;
-		// 	// Remove todos os caracteres não numéricos
-		// 	cpf = cpf.replace(/\D+/g, '');
+		function validarCPF(e) {
+			event.preventDefault();
+			let cpf = document.getElementById("cpf").value;
+			// Remove todos os caracteres não numéricos
+			cpf = cpf.replace(/\D+/g, '');
 
-		// 	// Verifica se o CPF possui 11 dígitos
-		// 	if (cpf.length !== 11) {
-		// 		alert("O CPF deve ter 11 dígitos.");
-		// 		return false;
-		// 	}
+			// Verifica se o CPF possui 11 dígitos
+			if (cpf.length !== 11) {
+				alert("O CPF deve ter 11 dígitos.");
+				return false;
+			}
 
-		// 	// Verifica se todos os dígitos são iguais
-		// 	if (/^(\d)\1{10}$/.test(cpf)) {
-		// 		alert("O CPF não pode conter todos os dígitos iguais.");
-		// 		return false;
-		// 	}
+			// Verifica se todos os dígitos são iguais
+			if (/^(\d)\1{10}$/.test(cpf)) {
+				alert("O CPF não pode conter todos os dígitos iguais.");
+				return false;
+			}
 
-		// 	// Validação dos dígitos verificadores
-		// 	let soma = 0;
-		// 	let resto;
+			// Validação dos dígitos verificadores
+			let soma = 0;
+			let resto;
 
-		// 	// Calcula o primeiro dígito verificador
-		// 	for (let i = 1; i <= 9; i++) {
-		// 		soma += parseInt(cpf.substring(i - 1, i)) * (11 - i);
-		// 	}
-		// 	resto = (soma * 10) % 11;
-		// 	if (resto === 10 || resto === 11) {
-		// 		resto = 0;
-		// 	}
-		// 	if (resto !== parseInt(cpf.substring(9, 10))) {
-		// 		alert("O CPF é inválido.");
-		// 		return false;
-		// 	}
+			// Calcula o primeiro dígito verificador
+			for (let i = 1; i <= 9; i++) {
+				soma += parseInt(cpf.substring(i - 1, i)) * (11 - i);
+			}
+			resto = (soma * 10) % 11;
+			if (resto === 10 || resto === 11) {
+				resto = 0;
+			}
+			if (resto !== parseInt(cpf.substring(9, 10))) {
+				alert("O CPF é inválido.");
+				return false;
+			}
 
-		// 	// Calcula o segundo dígito verificador
-		// 	soma = 0;
-		// 	for (let i = 1; i <= 10; i++) {
-		// 		soma += parseInt(cpf.substring(i - 1, i)) * (12 - i);
-		// 	}
-		// 	resto = (soma * 10) % 11;
-		// 	if (resto === 10 || resto === 11) {
-		// 		resto = 0;
-		// 	}
-		// 	if (resto !== parseInt(cpf.substring(10, 11))) {
-		// 		alert("O CPF é inválido.");
-		// 		return false;
-		// 	}
-		// 	//submit
-		// 	document.forms[0].submit();
-		// 	return true;
-		// }
+			// Calcula o segundo dígito verificador
+			soma = 0;
+			for (let i = 1; i <= 10; i++) {
+				soma += parseInt(cpf.substring(i - 1, i)) * (12 - i);
+			}
+			resto = (soma * 10) % 11;
+			if (resto === 10 || resto === 11) {
+				resto = 0;
+			}
+			if (resto !== parseInt(cpf.substring(10, 11))) {
+				alert("O CPF é inválido.");
+				return false;
+			}
+			//submit
+			document.forms[0].submit();
+			return true;
+		}
 
-		// function formatarCPF(cpf) {
-		// 	// Remove todos os caracteres não numéricos
-		// 	cpf = cpf.replace(/\D/g, '');
+		function formatarCPF(cpf) {
+			// Remove todos os caracteres não numéricos
+			cpf = cpf.replace(/\D/g, '');
 
-		// 	// Formata o CPF com a máscara
-		// 	cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+			// Formata o CPF com a máscara
+			cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
 
-		// 	return cpf;
-		// }
+			return cpf;
+		}
 
-		// function mascaraCPF(event) {
-		// 	let cpf = event.target.value.replace(/\D/g, '');
-		// 	event.target.value = formatarCPF(cpf);
-		// }
+		function mascaraCPF(event) {
+			let cpf = event.target.value.replace(/\D/g, '');
+			event.target.value = formatarCPF(cpf);
+		}
 	</script>
 
 </body>

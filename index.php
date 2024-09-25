@@ -501,6 +501,7 @@ if ($_POST['logout_id']) {
 		}
 
 	} catch (PDOException $e) {
+		die("Erro ao conectar ao banco de dados: " . $e->getMessage());
 		echo "Erro: " . $e->getMessage();
 	}
 
