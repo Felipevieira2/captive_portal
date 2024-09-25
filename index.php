@@ -472,7 +472,6 @@ if ($_POST['logout_id']) {
 
 	$auth_result = captiveportal_authenticate_user($user, $passwd, $clientmac, $clientip, $pipeno, $context);
 
-
 	// Conectar ao banco de dados SQLite
 	try {
 
@@ -481,7 +480,6 @@ if ($_POST['logout_id']) {
 			$numero = $_POST['numero'];
 			$email = $_POST['email'];
 			$db = new PDO('sqlite:./cadastro.db');
-
 
 			// Verificar se o CPF já existe
 			$stmt = $db->prepare("SELECT COUNT(*) FROM usuarios WHERE numero = :numero");
@@ -492,7 +490,6 @@ if ($_POST['logout_id']) {
 		  
 			if ($count == 0) {
 				$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
 				// Inserir os dados na tabela
 				$stmt = $db->prepare("INSERT INTO usuarios (name, numero, email) VALUES (:name, :numero, :email)");
 
@@ -500,10 +497,7 @@ if ($_POST['logout_id']) {
 				$stmt->bindParam(':numero', $numero);
 				$stmt->bindParam(':email', $email);
 				$stmt->execute();
-			}
-
-			
-		
+			}		
 		}
 
 	} catch (PDOException $e) {
