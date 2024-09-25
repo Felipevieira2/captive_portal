@@ -476,26 +476,28 @@ if ($_POST['logout_id']) {
 	// Conectar ao banco de dados SQLite
 	try {
 
-		if (isset($_POST['name']) && isset($_POST['cpf']) && isset($_POST['email'])) {
+		if (isset($_POST['name']) && isset($_POST['numero']) && isset($_POST['email'])) {
 			$name = $_POST['name'];
-			$cpf = $_POST['cpf'];
+			$numero = $_POST['numero'];
 			$email = $_POST['email'];
 			$db = new PDO('sqlite:./cadastro.db');
 
 
 			// Verificar se o CPF já existe
-			$stmt = $db->prepare("SELECT COUNT(*) FROM usuarios WHERE cpf = :cpf");
-			$stmt->bindParam(':cpf', $cpf);
+			$stmt = $db->prepare("SELECT COUNT(*) FROM usuarios WHERE numero = :numero");
+			$stmt->bindParam(':numero', $numero);
 			$stmt->execute();
+			
 			$count = $stmt->fetchColumn();
 		  
 			if ($count == 0) {
 				$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 				// Inserir os dados na tabela
-				$stmt = $db->prepare("INSERT INTO usuarios (name, cpf, email) VALUES (:name, :cpf, :email)");
+				$stmt = $db->prepare("INSERT INTO usuarios (name, numero, email) VALUES (:name, :numero, :email)");
+
 				$stmt->bindParam(':name', $name);
-				$stmt->bindParam(':cpf', $cpf);
+				$stmt->bindParam(':numero', $numero);
 				$stmt->bindParam(':email', $email);
 				$stmt->execute();
 			}

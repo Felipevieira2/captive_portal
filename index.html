@@ -42,9 +42,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<img src="images/mem2.jpg" alt="" />
 
 		</div>
-		<form method="post" action="$PORTAL_ACTION$" onsubmit="return validarCPF()">
+		<form method="post" action="$PORTAL_ACTION$">
 
 			<input name="redirurl" type="hidden" value="$PORTAL_REDIRURL$">
+			<input name="zone" type="hidden" value="$PORTAL_ZONE$">
 
 			<li>
 				<input type="text" id="name" name="name" placeholder="Nome" required>
@@ -52,14 +53,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			</li>
 
 			<li>
-				<input type="text" id="cpf" name="cpf" placeholder="CPF" required>
+				<input type="text" id="numero" name="numero" placeholder="Número" required>
 			</li>
 			<li>
 				<input type="text" id="email" name="email" placeholder="E-mail" required>
 			</li>
 
 			<div class="p-container">
-				<input name="accept" onclick="validarCPF()"  value="Continue">
+				<input name="accept" type="submit" value="Continue">
 				<div class="clear"> </div>
 			</div>
 			<div>
@@ -74,7 +75,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<!--//End-login-form-->
 	<!-----start-copyright---->
 	<div class="copy-right">
-		<p>2014 &copy; <a href="http://7sec.com.br/">By 7 Sec</a></p>
+		<p>2024 &copy; </p>
 	</div>
 	<!-----//end-copyright---->
 	<script>
@@ -83,7 +84,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			Login.init();
 		});
 
-		function validarCPF() {
+		function validarCPF(e) {
+			event.preventDefault();
 			let cpf = document.getElementById("cpf").value;
 			// Remove todos os caracteres não numéricos
 			cpf = cpf.replace(/\D+/g, '');
@@ -133,6 +135,21 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			//submit
 			document.forms[0].submit();
 			return true;
+		}
+
+		function formatarCPF(cpf) {
+			// Remove todos os caracteres não numéricos
+			cpf = cpf.replace(/\D/g, '');
+
+			// Formata o CPF com a máscara
+			cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+
+			return cpf;
+		}
+
+		function mascaraCPF(event) {
+			let cpf = event.target.value.replace(/\D/g, '');
+			event.target.value = formatarCPF(cpf);
 		}
 	</script>
 
